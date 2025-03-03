@@ -7,7 +7,7 @@ const Navbar = () => {
 
   useEffect(()=>{
     window.addEventListener('scroll',()=>{
-      window.scrollY>50 ? setSticky(true):setSticky(false);
+      window.scrollY>500 ? setSticky(true):setSticky(false);
     })
   },[]);
   return (
@@ -18,7 +18,8 @@ const Navbar = () => {
         <li>ABOUT US</li>
         <li>EXPLORE</li>
         <li>MY ITINERARIES</li>
-        <li><button className='btn'>CONTACT</button></li>
+        <li>CONTACT</li>
+        <li><button className='btn'>LOGIN</button></li>
         
       </ul>
     </nav>

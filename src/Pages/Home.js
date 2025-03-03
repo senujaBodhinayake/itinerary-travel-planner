@@ -6,6 +6,9 @@ import Title from '../Components/Title/Title'
 import About from '../Components/About/About'
 import Destinations from '../Components/Destinations/Destinations'
 import Itineraries from '../Components/MyItineraris/Itineraries'
+import Contact from '../Components/contact/Contact'
+import Footer from '../Components/Footer/Footer'
+
 
 
 
@@ -25,6 +28,10 @@ const Home = () => {
         <Destinations/>
         <Title subTitle='Itinerary Builder' title='Easiest way to plan your trip'/>
         <Itineraries/>
+        <Title subTitle='Contact Us' title='Get in Touch'/>
+        <Contact/>
+        <Footer/>
+        
         
       
         

@@ -29,11 +29,11 @@ import east_2 from '../../Arugam-Bay.jpg'
 import east_3 from '../../pasikuda.webp'
 const Destinations = () => {
   return (
-    <div classname='destinations'>
+    <div classname='destinations' id='explore'>
       <h3>Up country</h3>
     
       
-      <div className='upcountry'>
+      <div className='upcountry' id='upcountry'>
         
        <div className='destination'>
           <h4>Nuwara-Eliya</h4>
@@ -113,7 +113,7 @@ const Destinations = () => {
          <h3>Wild Life</h3>
     
       
-      <div className='upcountry'>
+      <div className='upcountry' id='wildLife'>
         
        <div className='destination'>
           <h4>Yala National Park</h4>
@@ -170,7 +170,7 @@ const Destinations = () => {
         <h3>Beaches</h3>
     
       
-      <div className='upcountry'>
+      <div className='upcountry' id='beaches'>
         
        <div className='destination'>
           <h4>South Coast</h4>
@@ -209,8 +209,9 @@ const Destinations = () => {
         <div className='upcountry'>
         
        
-        </div>
-     </div>
+       </div>
+    
+    </div>
      
     
   

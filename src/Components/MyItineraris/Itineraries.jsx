@@ -15,8 +15,11 @@ const Itineraries = () => {
           setNewDestination("");
         }
     }
+    
+    const googleMapsURL = 'https://www.google.com/maps'
+    const bookingURL='https://www.booking.com/index.en-gb.html?label=gen173nr-1BCAEoggI46AdIM1gEaIUBiAEBmAEJuAEXyAEM2AEB6AEBiAIBqAIDuALkjI--BsACAdICJDcxYTExYTQ5LTNkOTItNDFjOS04ODk0LWY3N2EzOGRmMDAwZtgCBeACAQ&sid=d6919db4610580996482cc47338e4b2e&keep_landing=1&sb_price_type=total&'
   return (
-    <div className='itinerary container'>
+    <div className='itinerary-container'>
         <h1 className='title'>Create Your Itinerary</h1>
         <div className='date-selection'>
             <input 
@@ -56,24 +59,42 @@ const Itineraries = () => {
         )}
         </div>
         <button className='save-button'>Save Itinerary</button>
-        <div className='itinerary overview'>
-            <h2>Itinerary Overview</h2>
-            <p><strong>Travel Dates:</strong>{startDate}-{endDate}</p>
-            <ul>
-                {destinations.map((destination,index)=>(
-                    <li key={index}>
-                        <h4>{destination.name}</h4>
+        <div className='itinerary-overview'>
+            <h2 className='section-title'>Itinerary Overview</h2>
+            <p><strong>Travel Dates:</strong>{startDate||"Not set"}-{endDate||"Not set"}</p>
+            <ul className='destination-list'>
+                {destinations.length>0 ?(destinations.map((destination,index)=>(
+                    <li key={index} className='destination-item'>
+                       {destination} 
                     </li>
-                ))}
+                ))
+            ):(
+                <p className='no-destinations'>No destinations selected yet.</p>
+            )}
             </ul>
-            <div className='map-container'>
-                <iframe
-                width="100%"
-                height="300"
-                loading='lazy'
-                allowFullScreen
-                referrerPolicy='no-referrer-when-downgrade'
-                src='https://www.google.com/maps'></iframe>
+            <div className='iframe-container'>
+                <div className='iframe-box'>
+                    <h3>Map View</h3>
+                    <iframe
+                    width="100%"
+                    height="300"
+                    loading="lazy"
+                    allowFullScreen
+                    referrerPolicy='no-referrer-when-downfrade'
+                    src={googleMapsURL}
+                    ></iframe>
+
+                </div>
+                <div className='iframe-box'>
+                    <h3>Find Place to Stay</h3>
+                    <iframe
+                    width="100%"
+                    height="100%"
+                    loading='lazy'
+                    allowFullScreen
+                    src={bookingURL}
+                    ></iframe>
+                </div>
                 
 
             </div>

@@ -27,15 +27,20 @@
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    
 }
 .input-field{
     flex: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    
 }
 .add-button{
     background: #005069;
+    max-width: 20%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     color: white;
     border:none;
     padding: 10px 15px;
@@ -71,35 +76,50 @@
     background: #0056b3;
 }
 .itinerary-overview{
-    background: #f0f8ff;
-    padding: 15px;
-    border-radius: 5px;
-    margin-top: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+   margin-top: 30px;
+   padding: 20px;
+   background: #fff;
+   border-radius: 10px;
+   box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+   text-align: left;
 }
 .itinerary-overview h2{
 text-align: center;
 color:#005069;
 
 }
-.itinerary-overview ul{
-    list-style-type: none;
-    padding: 0;
+.iframe-container{
+    display: flex;
+    justify-content: space-between;
+    gap:20px;
+    margin-top: 20px;
 }
-.itinerary-overview li{
-    margin-top: 10px;
+.iframe-box{
+    flex:1;
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+
+    
+}
+.iframe-box iframe{
+    width:100%;
+    height:300px;
+    border:0;
+    border-radius: 5px;
 }
 .finalize-button{
     background: #005069;
-    margin-top: 15px;
-}
-.map-container{
+    color:white;
+    padding: 10px 20px;
+    border:none;
+    border-radius: 5px;
+    cursor:pointer;
+    font-size: 16px;
     margin-top: 20px;
     width:100%;
-    border-radius: 5px;
-    overflow:hidden;
 }
-.map-container iframe{
-    border: 0;
-    border-radius: 5px;
+.finalize-button:hover{
+    background: #0056b3;
 }

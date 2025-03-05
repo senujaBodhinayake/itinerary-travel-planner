@@ -1,5 +1,5 @@
 .itinerary-container{
-    max-width: 600px;
+    max-width: 800px;
     margin: 50px auto;
     padding: 20px;
     background: white;
@@ -54,10 +54,14 @@
     margin-bottom: 20px;
 }
 .destination-item{
+    display: flex;
+    justify-content: space-between; 
     background: #f8f9fa;
     padding: 10px;
+    align-items: center;
     border-radius: 5px;
     margin-bottom: 5px;
+    border-bottom: 1px solid #ddd
 }
 
 .placeholder-text{
@@ -123,3 +127,23 @@ color:#005069;
 .finalize-button:hover{
     background: #0056b3;
 }
+.destination-actions {
+    display:flex;
+    gap: 10px;
+    
+    
+}
+.update-button, .delete-button {
+    
+    width: 30px; 
+    height: 30px; 
+    display: flex;
+    align-items: center;
+    justify-content:center;
+}
+.delete-button:hover {
+    background-color: #a80707;}
+    .icon{
+        width: 16px; /* Adjust icon size */
+    height: 16px;
+    }

@@ -1,20 +1,82 @@
 
 
 
-import React,{ useState } from 'react'
+import React,{ useState,useEffect } from 'react'
 import "./Itineraries.css"
+import axios from 'axios';
+import edit_icon from '../../icons8-edit-26.png';
+import delete_icon from '../../icons8-delete-30.png'
 
 const Itineraries = () => {
     const [destinations,setDestinations]= useState([]);
     const [newDestination,setNewDestination]=useState("");
     const [startDate,setStartDate]=useState("");
     const [endDate,setEndDate]=useState("");
+    const [error, setError] = useState("");
+
+    const fetchDestinations = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/itinerary'); // Adjust URL accordingly
+            setDestinations(response.data); // Set fetched destinations
+            console.log(response);
+        } catch (err) {
+            setError("Error fetching itinerary");
+            console.error(err);
+        }
+    };
+
+    useEffect(() => {
+        fetchDestinations();
+    }, []); 
     const addDestination = () => {
         if (newDestination.trim() !== "") {
           setDestinations([...destinations, newDestination]);
           setNewDestination("");
         }
     }
+    
+    const handleSubmit= async(payload)=>{
+        
+        const response=  await axios.post("http://localhost:5000/itinerary",payload)
+        console.log(response)
+
+    }
+
+    const handleUpdate = async (destination, index) => {
+        const newDestinationName = prompt('Enter the new destination name:', destination);
+
+        if (newDestinationName && newDestinationName !== destination) {
+            try {
+                const payload = { destination: newDestinationName };  // Data being sent to the backend
+                console.log('Payload for Update:', payload);  // Log the payload for debugging
+
+                // Send the PUT request
+                const response = await axios.put(`http://localhost:5000/itinerary/${index}`, payload);
+               fetchDestinations();
+            } catch (err) {
+                setError('Error updating destination');
+                console.error(err);
+            }
+        }
+    };
+    const handleDelete = async (index) => {
+        const confirmDelete = window.confirm("Are you sure you want to delete this destination?");
+        if (!confirmDelete) return;
+
+        try {
+            await axios.delete(`http://localhost:5000/itinerary/${index}`);
+
+            // ✅ Remove the deleted destination from state
+            setDestinations(prevDestinations => prevDestinations.filter((_, i) => i !== index));
+
+        } catch (err) {
+            setError("Error deleting destination");
+            console.error(err);
+        }
+    };
+
+    
+    
     
     const googleMapsURL = 'https://www.google.com/maps'
     const bookingURL='https://www.booking.com/index.en-gb.html?label=gen173nr-1BCAEoggI46AdIM1gEaIUBiAEBmAEJuAEXyAEM2AEB6AEBiAIBqAIDuALkjI--BsACAdICJDcxYTExYTQ5LTNkOTItNDFjOS04ODk0LWY3N2EzOGRmMDAwZtgCBeACAQ&sid=d6919db4610580996482cc47338e4b2e&keep_landing=1&sb_price_type=total&'
@@ -39,14 +101,16 @@ const Itineraries = () => {
             type='text'
             placeholder='Search for a destination...'
             value={newDestination}
-            onChange={(e)=> setNewDestination(e.target.value)}
+            onChange={(e)=> {
+                console.log(e.target.value)
+                setNewDestination(e.target.value)}}
             className='input-field'
             />
             <button onClick={addDestination} className='add-button'>
                 Add
             </button>
         </div>
-        <div className='itinerary-list'>
+        {/* <div className='itinerary-list'> 
         {destinations.length>0 ?(
             destinations.map((destination,index)=>(
                 <div key={index} className='destination-item'>
@@ -57,15 +121,36 @@ const Itineraries = () => {
         ):(
             <p className='placeholder-text'>No destinations added yet.</p>
         )}
-        </div>
-        <button className='save-button'>Save Itinerary</button>
+        </div> */}
+        <button onClick={()=>{
+            const payload={
+                startDate,
+                endDate,
+                destination:destinations[destinations.length-1]
+            }
+            console.log(destinations)
+            handleSubmit(payload);
+        }} 
+        className='save-button'>Save Itinerary</button>
         <div className='itinerary-overview'>
             <h2 className='section-title'>Itinerary Overview</h2>
             <p><strong>Travel Dates:</strong>{startDate||"Not set"}-{endDate||"Not set"}</p>
             <ul className='destination-list'>
                 {destinations.length>0 ?(destinations.map((destination,index)=>(
                     <li key={index} className='destination-item'>
-                       {destination} 
+                       <div>
+                        {destination.destination} 
+                        
+                       </div>
+                       <div className='destination-actions'>
+                        <button onClick={()=>handleUpdate(destination.destination,destination.id)}className='update-button'>
+                            <img src={edit_icon} alt=" edit" className='icon' />
+                        </button>
+                        <button onClick={()=>handleDelete(destination.id)} className='delete-button'>
+                            <img src={delete_icon} alt="delete" className='icon' />
+                        </button>
+                        
+                       </div>
                     </li>
                 ))
             ):(

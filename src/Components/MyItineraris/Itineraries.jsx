@@ -30,19 +30,27 @@ const Itineraries = () => {
     }, []); 
     const addDestination = () => {
         if (newDestination.trim() !== "") {
-          setDestinations([...destinations, newDestination]);
+            const newdest={destination:newDestination}
+          setDestinations([...destinations, newdest]);
           setNewDestination("");
         }
     }
     
-    const handleSubmit= async(payload)=>{
-        
-        const response=  await axios.post("http://localhost:5000/itinerary",payload)
-        console.log(response)
+    const handleSubmit = async () => {
+        if (destinations.length === 0) {
+            alert("Please add at least one destination!");
+            return;
+        }
+        const payload = {
+            startDate,
+            endDate,
+            destination: destinations[destinations.length - 1].destination // Ensure it's a string
+        };
+        console.log("Submitting:", payload);
+        await axios.post("http://localhost:5000/itinerary", payload);
+    };
 
-    }
-
-    const handleUpdate = async (destination, index) => {
+    const handleUpdate = async (destination, id) => {
         const newDestinationName = prompt('Enter the new destination name:', destination);
 
         if (newDestinationName && newDestinationName !== destination) {
@@ -51,7 +59,7 @@ const Itineraries = () => {
                 console.log('Payload for Update:', payload);  // Log the payload for debugging
 
                 // Send the PUT request
-                const response = await axios.put(`http://localhost:5000/itinerary/${index}`, payload);
+                const response = await axios.put(`http://localhost:5000/itinerary/${id}`, payload);
                fetchDestinations();
             } catch (err) {
                 setError('Error updating destination');
@@ -59,15 +67,15 @@ const Itineraries = () => {
             }
         }
     };
-    const handleDelete = async (index) => {
+    const handleDelete = async (id) => {
         const confirmDelete = window.confirm("Are you sure you want to delete this destination?");
         if (!confirmDelete) return;
 
         try {
-            await axios.delete(`http://localhost:5000/itinerary/${index}`);
+            await axios.delete(`http://localhost:5000/itinerary/${id}`);
 
             // ✅ Remove the deleted destination from state
-            setDestinations(prevDestinations => prevDestinations.filter((_, i) => i !== index));
+            setDestinations(prevDestinations => prevDestinations.filter(destination => destination.id !== id));
 
         } catch (err) {
             setError("Error deleting destination");
@@ -139,7 +147,7 @@ const Itineraries = () => {
                 {destinations.length>0 ?(destinations.map((destination,index)=>(
                     <li key={index} className='destination-item'>
                        <div>
-                        {destination.destination} 
+                       {typeof destination === "object" ? destination.destination : destination}  
                         
                        </div>
                        <div className='destination-actions'>
